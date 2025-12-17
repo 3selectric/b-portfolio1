@@ -39,8 +39,8 @@ const TractionSection = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {milestones.map((milestone, index) => (
             <div
-              key={index}
-              className="text-center p-6 bg-background border border-foreground"
+            key={index}
+            className="text-center p-6 bg-background border border-foreground rounded-2xl hover:shadow-xl transition-all duration-300"
             >
               <div className="w-14 h-14 border border-foreground flex items-center justify-center mx-auto mb-4">
                 <milestone.icon className="w-7 h-7 text-foreground" />

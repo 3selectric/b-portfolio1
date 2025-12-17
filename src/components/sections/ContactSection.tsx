@@ -52,8 +52,8 @@ const ContactSection = () => {
             </p>
           </div>
 
-          <div className="bg-background border border-foreground p-8 md:p-10">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-background border border-foreground p-8 md:p-10 rounded-2xl hover:shadow-xl transition-all duration-300">
+          <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">

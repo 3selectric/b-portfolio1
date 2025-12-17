@@ -39,8 +39,8 @@ const BusinessModelSection = () => {
         <div className="grid sm:grid-cols-2 gap-6">
           {models.map((model, index) => (
             <div
-              key={index}
-              className="flex gap-4 p-6 bg-background border border-foreground"
+            key={index}
+            className="flex gap-4 p-6 bg-background border border-foreground rounded-2xl hover:shadow-xl transition-all duration-300"
             >
               <div className="w-12 h-12 border border-foreground flex items-center justify-center flex-shrink-0">
                 <model.icon className="w-6 h-6 text-foreground" />

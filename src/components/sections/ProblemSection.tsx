@@ -39,8 +39,8 @@ const ProblemSection = () => {
         <div className="grid sm:grid-cols-2 gap-6">
           {problems.map((problem, index) => (
             <div
-              key={index}
-              className="group p-6 md:p-8 bg-background border border-foreground"
+            key={index}
+            className="group p-6 md:p-8 bg-background border border-foreground rounded-2xl hover:shadow-xl transition-all duration-300"
             >
               <div className="w-12 h-12 border border-foreground flex items-center justify-center mb-4">
                 <problem.icon className="w-6 h-6 text-foreground" />
