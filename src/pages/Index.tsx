@@ -4,7 +4,13 @@ import HeroSection from "@/components/sections/HeroSection";
 import ProblemSection from "@/components/sections/ProblemSection";
 import SolutionSection from "@/components/sections/SolutionSection";
 import BusinessModelSection from "@/components/sections/BusinessModelSection";
-import TractionSection from "@/components/sections/TractionSection";
+// Replace old import:
+import RecognitionSection from "@/components/sections/RecognitionSection";
+import TractionTimelineSection from "@/components/sections/TractionTimelineSection";
+
+// In JSX:
+// <RecognitionSection />
+// <TractionTimelineSection />
 import FounderSection from "@/components/sections/FounderSection";
 import ContactSection from "@/components/sections/ContactSection";
 
@@ -17,7 +23,8 @@ const Index = () => {
         <ProblemSection />
         <SolutionSection />
         <BusinessModelSection />
-        <TractionSection />
+        <TractionTimelineSection />
+        <RecognitionSection />
         <FounderSection />
         <ContactSection />
       </main>
