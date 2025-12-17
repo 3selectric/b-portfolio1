@@ -18,7 +18,7 @@ const milestones = [
   },
   {
     icon: FileCheck,
-    title: "MSME Registration",
+    title: "MSME & Udayam Registered",
     subtitle: "Completed",
   },
 ];

@@ -20,7 +20,7 @@ const HeroSection = () => {
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            3S Electric Innovative Services solves service, maintenance, and reliability challenges faced by EV owners, fleet operators, and mechanics across India.
+            3SElectric Innovative Services solves service, maintenance, and reliability challenges faced by EV owners, fleet operators, and mechanics across India.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">

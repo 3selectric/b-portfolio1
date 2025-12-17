@@ -18,7 +18,7 @@ const SolutionSection = () => {
               Our Solution
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              3S Electric is building a unified EV service ecosystem that connects EV owners and fleet operators with trained service partners, ensuring reliable and fast maintenance across all brands.
+              3SElectric is building a unified EV service ecosystem that connects EV owners and fleet operators with trained service partners, ensuring reliable and fast maintenance across all brands.
             </p>
             
             <ul className="space-y-4 pt-2">

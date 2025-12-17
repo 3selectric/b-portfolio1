@@ -110,14 +110,14 @@ const ContactSection = () => {
 
             <div className="flex items-center justify-center gap-6 mt-8 pt-8 border-t border-foreground">
               <a
-                href="mailto:founder@3selectric.in"
+                href="mailto:3selectric2024@gmail.com"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Mail className="w-5 h-5" />
-                <span className="text-sm">founder@3selectric.in</span>
+                <span className="text-sm">3selectric2024@gmail.com</span>
               </a>
               <a
-                href="https://linkedin.com/company/3selectric"
+                href="https://www.linkedin.com/company/3selectric-innovative-services/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"

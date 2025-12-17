@@ -17,24 +17,24 @@ const FounderSection = () => {
             </div>
 
             <h3 className="text-2xl font-bold text-foreground mb-2">
-              Sairam Meiyappan
+              Sonaa Meyyappan
             </h3>
-            <p className="text-foreground font-medium mb-6">Founder, 3S Electric</p>
+            <p className="text-foreground font-medium mb-6">Founder, 3SElectric</p>
 
             <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto mb-8">
-              An engineering student and EV ecosystem builder, Sairam is passionate about solving real EV service problems in India. He is actively working towards building a scalable EV service company that bridges the gap between EV adoption and reliable after-sales support.
+              EV ecosystem builder and An engineering student, Meyyappan is passionate about solving real EV service problems in India. He is actively working towards building a scalable EV service company that bridges the gap between EV adoption and reliable after-sales support.
             </p>
 
             <div className="flex justify-center gap-4">
               <Button variant="outline" size="default" className="border-foreground" asChild>
-                <a href="mailto:founder@3selectric.in" aria-label="Email Sairam">
+                <a href="mailto:bewithmeyyappan@gmail.com" aria-label="Email Meyyappan">
                   <Mail className="w-4 h-4 mr-2" />
                   Email
                 </a>
               </Button>
               <Button variant="outline" size="default" className="border-foreground" asChild>
                 <a 
-                  href="https://linkedin.com/in/sairam-meiyappan" 
+                  href="https://linkedin.com/in/Sonaa-Meyyappan"
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="LinkedIn Profile"

@@ -13,7 +13,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © 2025 3S Electric Innovative Services. All rights reserved.
+            © 2025 3SElectric Innovative Services. All rights reserved.
           </p>
         </div>
       </div>
