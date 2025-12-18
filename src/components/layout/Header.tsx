@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   const goToPilotService = () => {
-    window.location.href = "/b-portfolio1/pilot-service";
+    window.location.href = "/b-portfolio1/#/pilot-service";
     setIsMobileMenuOpen(false);
   };
 
