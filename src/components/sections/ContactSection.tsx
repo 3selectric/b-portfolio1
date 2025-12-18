@@ -42,15 +42,30 @@ const ContactSection = () => {
     }
 
     // 3. VALIDATION
+    // 3. VALIDATION
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+
     if (!formData.name || formData.name.length < 2) {
       toast({ title: "Name too short", variant: "destructive" });
       return;
     }
+
     if (!emailRegex.test(formData.email)) {
       toast({ title: "Invalid email", variant: "destructive" });
       return;
     }
+
+    // Phone: must be exactly 10 digits
+    if (!phoneRegex.test(formData.phone)) {
+      toast({
+        title: "Invalid phone number",
+        description: "Please enter a 10‑digit mobile number.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (formData.message.length < 10) {
       toast({ title: "Message too short", variant: "destructive" });
       return;
@@ -174,9 +189,11 @@ const ContactSection = () => {
     <Input
     id="phone"
     name="phone"
+    type="tel"
     value={formData.phone}
     onChange={handleChange}
     placeholder="xxxxx xxxxx"
+    maxLength={10}
     className="bg-background border-foreground"
     />
     </div>

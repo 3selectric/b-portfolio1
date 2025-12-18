@@ -40,22 +40,22 @@ const FounderSection = () => {
     {/* CO-FOUNDER - ADD YOUR DETAILS HERE */}
     <div className="bg-background border border-foreground p-8 md:p-12 rounded-2xl hover:shadow-xl transition-all">
     <div className="w-24 h-24 border border-foreground flex items-center justify-center mx-auto mb-6 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20">
-    <span className="text-3xl font-bold text-primary">CN</span> {/* Change initials */}
+    <span className="text-3xl font-bold text-primary">MB</span> {/* Change initials */}
     </div>
-    <h3 className="text-2xl font-bold text-foreground mb-2">[Co-Founder Name]</h3>
-    <p className="text-foreground font-medium mb-6">[Title - CTO/COO/etc]</p>
+    <h3 className="text-2xl font-bold text-foreground mb-2">Mohandass Bharathiraj</h3>
+    <p className="text-foreground font-medium mb-6">Co-Founder & Technology Lead</p>
     <p className="text-muted-foreground leading-relaxed mb-8">
-    [Add co-founder bio here - 2-3 sentences about expertise and role]
+  Handles platform development and technical execution. Actively involved in all startup programs and solution planning.
     </p>
     <div className="flex justify-center gap-4">
     <Button variant="outline" size="default" className="border-foreground" asChild>
-    <a href="mailto:co-founder@email.com" aria-label="Email Co-Founder">
+    <a href="mailto:mohandasssai23@gmail.com" aria-label="Email Co-Founder">
     <Mail className="w-4 h-4 mr-2" />
     Email
     </a>
     </Button>
     <Button variant="outline" size="default" className="border-foreground" asChild>
-    <a href="https://linkedin.com/in/co-founder" target="_blank" rel="noopener noreferrer">
+    <a href="https://linkedin.com/in/Mohandass-Bharathiraj" target="_blank" rel="noopener noreferrer">
     <Linkedin className="w-4 h-4 mr-2" />
     LinkedIn
     </a>
