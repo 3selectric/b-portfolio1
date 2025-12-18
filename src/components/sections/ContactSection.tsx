@@ -214,7 +214,7 @@ const ContactSection = () => {
     />
     </div>
 
-    <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+    <Button type="submit" size="lg" className="w-full hover:shadow-xl transition-all duration-300" disabled={isSubmitting}>
     {isSubmitting ? "Sending..." : "Send Message"}
     <Send className="w-4 h-4 ml-2" />
     </Button>

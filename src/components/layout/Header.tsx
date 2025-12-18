@@ -8,7 +8,7 @@ const navLinks = [
 { label: "Business Model", href: "#business-model" },
 { label: "Traction", href: "#traction" },
 { label: "Recognition", href: "#recognition" },
-{ label: "Founder", href: "#founder" },
+// Founder removed from desktop nav, still accessible via section scroll
 ];
 
 const Header = () => {
@@ -24,7 +24,14 @@ const Header = () => {
   }, []);
 
   const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    document
+    .getElementById("contact")
+    ?.scrollIntoView({ behavior: "smooth" });
+    setIsMobileMenuOpen(false);
+  };
+
+  const goToPilotService = () => {
+    window.location.href = "/b-portfolio1/pilot-service";
     setIsMobileMenuOpen(false);
   };
 
@@ -37,8 +44,8 @@ const Header = () => {
     }`}
     >
     <div className="container-narrow px-6 md:px-8">
-    <div className="flex items-center justify-between">
-    {/* Logo */}
+    <div className="flex items-center justify-between gap-4">
+    {/* Logo + Name */}
     <a href="#" className="flex items-center gap-2">
     <div className="w-9 h-9 border border-foreground flex items-center justify-center">
     <span className="text-foreground font-bold text-lg">3S</span>
@@ -48,8 +55,8 @@ const Header = () => {
     </span>
     </a>
 
-    {/* Desktop Navigation */}
-    <nav className="hidden md:flex items-center gap-8">
+    {/* Desktop Navigation - slightly tighter gap, one fewer item */}
+    <nav className="hidden md:flex items-center gap-6">
     {navLinks.map((link) => (
       <a
       key={link.href}
@@ -61,10 +68,13 @@ const Header = () => {
     ))}
     </nav>
 
-    {/* CTA Button */}
-    <div className="hidden md:block">
-    <Button variant="default" onClick={scrollToContact}>
+    {/* Desktop CTAs - compact spacing */}
+    <div className="hidden md:flex items-center gap-2">
+    <Button variant="default" size="sm" onClick={scrollToContact}>
     Talk to Us
+    </Button>
+    <Button variant="outline" size="sm" onClick={goToPilotService}>
+    Pilot
     </Button>
     </div>
 
@@ -82,10 +92,13 @@ const Header = () => {
     </button>
     </div>
 
-    {/* Mobile Menu */}
+    {/* Mobile Menu - keep all sections including Founder */}
     {isMobileMenuOpen && (
       <nav className="md:hidden pt-6 pb-4 space-y-4">
-      {navLinks.map((link) => (
+      {[
+        ...navLinks,
+        { label: "Founder", href: "#founder" }, // shown only in mobile now
+      ].map((link) => (
         <a
         key={link.href}
         href={link.href}
@@ -95,12 +108,20 @@ const Header = () => {
         {link.label}
         </a>
       ))}
+
       <Button
       variant="default"
       className="w-full mt-4"
       onClick={scrollToContact}
       >
       Talk to Us
+      </Button>
+      <Button
+      variant="outline"
+      className="w-full mt-3"
+      onClick={goToPilotService}
+      >
+      Pilot
       </Button>
       </nav>
     )}

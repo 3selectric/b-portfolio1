@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import PilotServicePage from "./pages/PilotService";
 
 const queryClient = new QueryClient();
 
@@ -13,9 +14,10 @@ const App = () => (
   <TooltipProvider>
   <Toaster />
   <Sonner />
-  <BrowserRouter basename="/b-portfolio1">  {/* ← ADD THIS */}
+  <BrowserRouter basename="/b-portfolio1">
   <Routes>
   <Route path="/" element={<Index />} />
+  <Route path="/pilot-service" element={<PilotServicePage />} />
   <Route path="*" element={<NotFound />} />
   </Routes>
   </BrowserRouter>
