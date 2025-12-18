@@ -12,7 +12,7 @@ const ContactSection = () => {
     name: "",
     email: "",
     message: "",
-    website: "", // ← HONEYPOT
+    website: "", // ← website
     phone: "",
   });
   const [formStartTime, setFormStartTime] = useState(0);
@@ -23,7 +23,7 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("🔍 Form submitted:", formData);
+    console.log("Form submitted:", formData);
 
     // 1. TIME DELAY CHECK
     if (Date.now() - formStartTime < 5000) {
@@ -35,9 +35,9 @@ const ContactSection = () => {
       return;
     }
 
-    // 2. HONEYPOT CHECK
+    // 2. Website CHECK
     if (formData.website.trim()) {
-      console.log("SPAM BLOCKED - Honeypot");
+      console.log("wrong - website");
       return;
     }
 
@@ -82,7 +82,7 @@ const ContactSection = () => {
       console.log("SUCCESS");
       toast({
         title: "Message Sent!",
-        description: "Saved to records. Reply within 24h.",
+        description: "Saved to records, will Reply within 24hrs.",
       });
       setFormData({ name: "", email: "", message: "", website: "", phone: "" });
       setFormStartTime(Date.now());
@@ -122,7 +122,7 @@ const ContactSection = () => {
 
     <div className="bg-background border border-foreground p-8 md:p-10 rounded-2xl hover:shadow-xl transition-all duration-300">
     <form onSubmit={handleSubmit} className="space-y-6">
-    {/* 🕵️ HONEYPOT */}
+    {/* website */}
     <div className="h-0 w-0 overflow-hidden p-0 m-0 border-0" aria-hidden="true">
     <Input
     id="website"
@@ -176,7 +176,7 @@ const ContactSection = () => {
     name="phone"
     value={formData.phone}
     onChange={handleChange}
-    placeholder="+91 98765 43210"
+    placeholder="xxxxx xxxxx"
     className="bg-background border-foreground"
     />
     </div>
