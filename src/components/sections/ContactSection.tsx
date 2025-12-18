@@ -37,7 +37,7 @@ const ContactSection = () => {
 
     // 2. HONEYPOT CHECK
     if (formData.website.trim()) {
-      console.log("🛑 SPAM BLOCKED - Honeypot");
+      console.log("SPAM BLOCKED - Honeypot");
       return;
     }
 
@@ -66,7 +66,7 @@ const ContactSection = () => {
     formDataToSend.append("phone", formData.phone || "");
 
     try {
-      // 🔥 NEW GAS DEPLOYMENT URL
+      // NEW GAS DEPLOYMENT URL
       const isLocalhost = window.location.hostname.includes('localhost') ||
       window.location.hostname === '127.0.0.1';
 
@@ -79,15 +79,15 @@ const ContactSection = () => {
         }
       );
 
-      console.log("✅ SUCCESS - Check Google Sheet!");
+      console.log("SUCCESS");
       toast({
-        title: "✅ Message Sent!",
+        title: "Message Sent!",
         description: "Saved to records. Reply within 24h.",
       });
       setFormData({ name: "", email: "", message: "", website: "", phone: "" });
       setFormStartTime(Date.now());
     } catch (error) {
-      console.error("❌ ERROR:", error);
+      console.error("ERROR:", error);
       toast({
         title: "Failed",
         description: "Email: 3selectric2024@gmail.com",
