@@ -1,16 +1,7 @@
 import { Award, Building, Sparkles, FileCheck } from "lucide-react";
 
 const milestones = [
-  {
-    icon: Award,
-    title: "IIT Kharagpur Empresario",
-    subtitle: "Semi-finalist",
-  },
-{
-  icon: Award,
-  title: "BITS Pilani",
-  subtitle: "Semi-finalist",
-},
+
 {
   icon: Sparkles,
   title: "SparkLab Program",
@@ -18,12 +9,32 @@ const milestones = [
 },
 {
   icon: FileCheck,
-  title: "MSME & Udayam Registered",
+  title: "MSME & Udyam Registered",
   subtitle: "Completed",
+},
+{
+  icon: Building,
+  title: "IDE Bootcamp",
+  subtitle: "MoE Innovation Cell – Incubation ecosystem",
+},
+{
+  icon: Sparkles,
+  title: "Wadhwani Foundation",
+  subtitle: "Mentored and solution validated",
+},
+{
+  icon: Award,
+  title: "IIT Kharagpur Empresario",
+  subtitle: "Semi-finalist",
+},
+{
+  icon: Award,
+  title: "BITS Pilani",
+  subtitle: "Semi-finalist",
 },
 ];
 
-const RecognitionSection = () => {  // ← CHANGED: TractionSection → RecognitionSection
+const RecognitionSection = () => {
   return (
     <section id="recognition" className="section-padding border-b border-foreground">
     <div className="container-narrow">
@@ -36,7 +47,7 @@ const RecognitionSection = () => {  // ← CHANGED: TractionSection → Recognit
     </p>
     </div>
 
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {milestones.map((milestone, index) => (
       <div
       key={index}
@@ -59,4 +70,4 @@ const RecognitionSection = () => {  // ← CHANGED: TractionSection → Recognit
   );
 };
 
-export default RecognitionSection;  // ← CHANGED: export default TractionSection → RecognitionSection
+export default RecognitionSection;
