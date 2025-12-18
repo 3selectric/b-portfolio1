@@ -66,16 +66,16 @@ const ContactSection = () => {
     formDataToSend.append("phone", formData.phone || "");
 
     try {
-      // 🔥 LOCALHOST vs PRODUCTION FIX
+      // 🔥 NEW GAS DEPLOYMENT URL
       const isLocalhost = window.location.hostname.includes('localhost') ||
       window.location.hostname === '127.0.0.1';
 
       await fetch(
-        "https://script.google.com/macros/s/AKfycbylMlRmSjHCJ5V0a4uHd7z_5CqX00Lu3NMyy6VZCRObHtoZJ7hc_28nEYydc_jtdCxW/exec",
+        "https://script.google.com/macros/s/AKfycbwAf3VJWZbQ4p9qSCXddh40i9xK1k-livkLBuZ8dwoEM9dScsqwcXjOVNqU8xb5gGnG/exec",
         {
           method: "POST",
           body: formDataToSend,
-          ...(isLocalhost ? {} : { mode: "no-cors" }) // Only production needs no-cors
+          ...(isLocalhost ? {} : { mode: "no-cors" })
         }
       );
 
@@ -122,7 +122,7 @@ const ContactSection = () => {
 
     <div className="bg-background border border-foreground p-8 md:p-10 rounded-2xl hover:shadow-xl transition-all duration-300">
     <form onSubmit={handleSubmit} className="space-y-6">
-    {/* 🕵️ HONEYPOT - Invisible to humans */}
+    {/* 🕵️ HONEYPOT */}
     <div className="h-0 w-0 overflow-hidden p-0 m-0 border-0" aria-hidden="true">
     <Input
     id="website"
