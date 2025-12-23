@@ -64,7 +64,7 @@ const PilotServicePage = () => {
         otherIssue: "",
         brandOther: "",
         modelOther: "",
-        website: "", // Honeypot
+        website: "", // Website
         consent: false,
     });
 
@@ -148,16 +148,6 @@ const PilotServicePage = () => {
             });
             return;
         }
-        if (
-            selectedIssues.includes("Other issue (please describe below)") &&
-            !formData.otherIssue.trim()
-        ) {
-            toast({
-                title: "Describe the other issue",
-                variant: "destructive",
-            });
-            return;
-        }
         if (!formData.location) {
             toast({
                 title: "Select your location",
@@ -189,12 +179,9 @@ const PilotServicePage = () => {
             model === "Other" ? formData.modelOther.trim() || "Other" : model
         );
         formDataToSend.append("issues", selectedIssues.join(" | "));
-        formDataToSend.append(
-            "otherIssue",
-            formData.otherIssue.trim() || "N/A"
-        );
+        formDataToSend.append("otherIssue", formData.otherIssue.trim() || "N/A");
         formDataToSend.append("location", formData.location);
-        formDataToSend.append("website", formData.website); // Honeypot
+        formDataToSend.append("website", formData.website); // website
 
         try {
             const isLocalhost =
@@ -375,7 +362,7 @@ const PilotServicePage = () => {
             )}
             </div>
 
-            {/* Issues */}
+            {/* Issues + free-text description */}
             <div>
             <Label>
             What issues are you facing? * (select all that apply)
@@ -396,19 +383,16 @@ const PilotServicePage = () => {
                 </div>
             ))}
             </div>
-            {selectedIssues.includes(
-                "Other issue (please describe below)"
-            ) && (
-                <Textarea
-                className="mt-4"
-                name="otherIssue"
-                placeholder="Describe the other issue in detail..."
-                rows={4}
-                value={formData.otherIssue}
-                onChange={handleChange}
-                required
-                />
-            )}
+
+            {/* Always-visible description textbox */}
+            <Textarea
+            className="mt-4"
+            name="otherIssue"
+            placeholder="You can describe the issue or add extra details here..."
+            rows={4}
+            value={formData.otherIssue}
+            onChange={handleChange}
+            />
             </div>
 
             {/* Location */}
@@ -425,7 +409,6 @@ const PilotServicePage = () => {
             <option value="Avadi">Avadi</option>
             <option value="Ambattur">Ambattur</option>
             <option value="Thirumullaivoyal">Thirumullaivoyal</option>
-            <option value="Nearby area">Nearby area</option>
             </select>
             </div>
 
