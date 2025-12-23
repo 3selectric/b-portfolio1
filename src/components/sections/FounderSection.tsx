@@ -37,7 +37,7 @@ const FounderSection = () => {
     </div>
     </div>
 
-    {/* CO-FOUNDER - ADD YOUR DETAILS HERE */}
+    {/* CO-FOUNDER - nantha */}
     <div className="bg-background border border-foreground p-8 md:p-12 rounded-2xl hover:shadow-xl transition-all">
     <div className="w-24 h-24 border border-foreground flex items-center justify-center mx-auto mb-6 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20">
     <span className="text-3xl font-bold text-primary">MB</span> {/* Change initials */}

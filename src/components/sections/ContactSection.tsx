@@ -86,7 +86,7 @@ const ContactSection = () => {
       window.location.hostname === '127.0.0.1';
 
       await fetch(
-        "https://script.google.com/macros/s/AKfycbzswhD2w9PfqIXNy-Crpx8nlvLx0rGEGxFb_dGW7nM2LfxVu8okAjenFDuO9cfg1Dr0/exec",
+        "https://script.google.com/macros/s/AKfycbzfjsWvdF6XePNEorn8A9bkiaqR73i3tjLFQJdUvdPnCipnALrdi6xlSC9LW-S_2OFU/exec",
         {
           method: "POST",
           body: formDataToSend,
