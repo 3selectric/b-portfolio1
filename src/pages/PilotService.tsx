@@ -285,7 +285,7 @@ const PilotServicePage = () => {
         name="phone"
         value={formData.phone}
         onChange={handleChange}
-        placeholder="10-digit number"
+        placeholder="10-digit number (preferably Whatsapp No.)"
         maxLength={10}
         required
         />
