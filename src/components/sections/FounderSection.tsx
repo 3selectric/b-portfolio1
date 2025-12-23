@@ -22,13 +22,13 @@ const FounderSection = () => {
     EV ecosystem builder and engineering student passionate about solving real EV service problems in India. Building scalable EV service company.
     </p>
     <div className="flex justify-center gap-4">
-    <Button variant="outline" size="default" className="border-foreground" asChild>
+    <Button variant="outline" size="default" className="border-foreground hover:shadow-xl transition-all" asChild>
     <a href="mailto:bewithmeyyappan@gmail.com" aria-label="Email Meyyappan">
     <Mail className="w-4 h-4 mr-2" />
     Email
     </a>
     </Button>
-    <Button variant="outline" size="default" className="border-foreground" asChild>
+    <Button variant="outline" size="default" className="border-foreground hover:shadow-xl transition-all" asChild>
     <a href="https://linkedin.com/in/Sonaa-Meyyappan" target="_blank" rel="noopener noreferrer">
     <Linkedin className="w-4 h-4 mr-2" />
     LinkedIn
@@ -48,13 +48,13 @@ const FounderSection = () => {
   Handles platform development and technical execution. Actively involved in all startup programs and solution planning.
     </p>
     <div className="flex justify-center gap-4">
-    <Button variant="outline" size="default" className="border-foreground" asChild>
+    <Button variant="outline" size="default" className="border-foreground hover:shadow-xl transition-all" asChild>
     <a href="mailto:mohandasssai23@gmail.com" aria-label="Email Co-Founder">
     <Mail className="w-4 h-4 mr-2" />
     Email
     </a>
     </Button>
-    <Button variant="outline" size="default" className="border-foreground" asChild>
+    <Button variant="outline" size="default" className="border-foreground hover:shadow-xl transition-all" asChild>
     <a href="https://linkedin.com/in/Mohandass-Bharathiraj" target="_blank" rel="noopener noreferrer">
     <Linkedin className="w-4 h-4 mr-2" />
     LinkedIn

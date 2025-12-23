@@ -34,17 +34,18 @@ const modelsByBrand: Record<string, string[]> = {
 };
 
 const commonIssues = [
+    "General maintenance or service",
     "Battery not charging or slow charging",
-"Reduced range (less km per charge than expected)",
-"Scooter not starting or sudden power loss",
-"Warning lights / error codes on display",
-"Strange noises from motor, controller or brakes",
-"Brake problems (soft brakes or not working properly)",
-"Throttle / accelerator not responding smoothly",
-"Controller faults or overheating",
-"Headlight, indicators or display not working",
-"Tyre issues or general maintenance needed",
-"Other issue (please describe below)",
+    "Reduced range (less km per charge than expected)",
+    "Scooter not starting or sudden power loss",
+    "Warning lights / error codes on display",
+    "Strange noises from motor, controller or brakes",
+    "Brake problems (soft brakes or not working properly)",
+    "Throttle / accelerator not responding smoothly",
+    "Controller faults or overheating",
+    "Headlight, indicators or display not working",
+    "Tyre issues or general maintenance needed",
+    "Other issue (please describe below)",
 ];
 
 const PilotServicePage = () => {
