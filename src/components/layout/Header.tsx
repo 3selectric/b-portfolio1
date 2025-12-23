@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -8,31 +9,53 @@ const navLinks = [
 { label: "Business Model", href: "#business-model" },
 { label: "Traction", href: "#traction" },
 { label: "Recognition", href: "#recognition" },
-// Founder removed from desktop nav, still accessible via section scroll
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToContact = () => {
-    document
-    .getElementById("contact")
-    ?.scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSectionClick = (sectionId: string) => {
     setIsMobileMenuOpen(false);
+
+    if (location.pathname === "/") {
+      // already on home – just scroll
+      scrollToSection(sectionId);
+    } else {
+      // go to home route, then scroll after mount
+      navigate("/");
+      setTimeout(() => scrollToSection(sectionId), 80);
+    }
+  };
+
+  const scrollToContact = () => {
+    setIsMobileMenuOpen(false);
+
+    if (location.pathname === "/") {
+      scrollToSection("contact");
+    } else {
+      navigate("/");
+      setTimeout(() => scrollToSection("contact"), 80);
+    }
   };
 
   const goToPilotService = () => {
-    window.location.href = "/b-portfolio1/#/pilot-service";
     setIsMobileMenuOpen(false);
+    navigate("/pilot-service");
   };
 
   return (
@@ -46,29 +69,39 @@ const Header = () => {
     <div className="container-narrow px-6 md:px-8">
     <div className="flex items-center justify-between gap-4">
     {/* Logo + Name */}
-    <a href="#" className="flex items-center gap-2">
+    <button
+    type="button"
+    onClick={() => {
+      navigate("/");
+      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
+    }}
+    className="flex items-center gap-2"
+    >
     <div className="w-9 h-9 border border-foreground flex items-center justify-center">
     <span className="text-foreground font-bold text-lg">3S</span>
     </div>
     <span className="font-bold text-lg text-foreground">
     Electric Innovative Services
     </span>
-    </a>
+    </button>
 
-    {/* Desktop Navigation - slightly tighter gap, one fewer item */}
+    {/* Desktop Navigation */}
     <nav className="hidden md:flex items-center gap-6">
     {navLinks.map((link) => (
-      <a
+      <button
       key={link.href}
-      href={link.href}
+      type="button"
+      onClick={() =>
+        handleSectionClick(link.href.replace("#", ""))
+      }
       className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
       >
       {link.label}
-      </a>
+      </button>
     ))}
     </nav>
 
-    {/* Desktop CTAs - compact spacing */}
+    {/* Desktop CTAs */}
     <div className="hidden md:flex items-center gap-2">
     <Button variant="default" size="sm" onClick={scrollToContact}>
     Talk to Us
@@ -81,7 +114,7 @@ const Header = () => {
     {/* Mobile Menu Toggle */}
     <button
     className="md:hidden p-2 text-foreground"
-    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+    onClick={() => setIsMobileMenuOpen((v) => !v)}
     aria-label="Toggle menu"
     >
     {isMobileMenuOpen ? (
@@ -92,22 +125,23 @@ const Header = () => {
     </button>
     </div>
 
-    {/* Mobile Menu - keep all sections including Founder */}
+    {/* Mobile Menu */}
     {isMobileMenuOpen && (
       <nav className="md:hidden pt-6 pb-4 space-y-4">
-      {[
-        ...navLinks,
-        { label: "Founder", href: "#founder" }, // shown only in mobile now
-      ].map((link) => (
-        <a
-        key={link.href}
-        href={link.href}
-        className="block text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
-        onClick={() => setIsMobileMenuOpen(false)}
-        >
-        {link.label}
-        </a>
-      ))}
+      {[...navLinks, { label: "Founder", href: "#founder" }].map(
+        (link) => (
+          <button
+          key={link.href}
+          type="button"
+          onClick={() =>
+            handleSectionClick(link.href.replace("#", ""))
+          }
+          className="block w-full text-left text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+          {link.label}
+          </button>
+        )
+      )}
 
       <Button
       variant="default"
