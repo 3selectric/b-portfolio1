@@ -6,44 +6,51 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Send } from "lucide-react";
 
 const chineseBrands = [
     "Okinawa",
 "Ampere",
-"Benling",
+"Pure EV",
 "Komaki",
-"Pure EV", // Added as it's commonly mentioned
+"Benling",
+"Okaya",
+"Hero Electric",
 "Other",
 ];
 
 const modelsByBrand: Record<string, string[]> = {
-    Okinawa: ["Praise", "Ridge", "iPraise+", "Lite", "Dual", "Other"],
-    Ampere: ["Magnus", "Reo", "Zeal", "Primus", "Nexus", "Other"],
-    Benling: ["Falcon", "Aura", "Icon", "Kriti", "Other"],
-    Komaki: ["SE", "DT 3000", "Venice", "XGT KM", "XGT X-One", "Other"],
-    "Pure EV": ["Etrance Neo", "EPluto 7G", "ETron Plus", "Other"],
+    Okinawa: ["Praise Pro", "Ridge+", "iPraise+", "Okhi-90", "Lite", "Dual", "R30", "Other"],
+    Ampere: ["Magnus EX", "Reo Plus", "Zeal EX", "Primus", "Nexus", "Other"],
+    "Pure EV": ["EPluto 7G", "ETrance Neo", "ETron Plus", "ecuDryft", "Other"],
+    Komaki: ["Venice", "XGT X-One", "SE", "DT 3000", "XGT KM", "Flora", "Cat 2.0", "Other"],
+    Benling: ["Aura", "Icon", "Falcon", "Kriti", "Other"],
+    Okaya: ["Faast F2B", "Freedum", "Classiq", "Evok", "Other"],
+    "Hero Electric": ["Optima CX", "Photon HX", "Nyx HX", "Atria", "Other"],
+    Revolt: ["RV400", "RV300", "Other"],
+    Ather: ["450X", "450 Plus", "Rizta", "Other"],
     Other: ["Other"],
 };
 
 const commonIssues = [
-    "Battery not charging properly",
-"Reduced range / low mileage",
-"Scooter not starting or turning on",
-"Warning lights or error codes on display",
-"Strange noises (motor, brakes, etc.)",
-"Brake issues or poor braking",
-"Throttle/accelerator not responding well",
-"Controller or wiring problems",
-"Tyre puncture or wear",
-"General service / maintenance check",
-"Other issue",
+    "Battery not charging or slow charging",
+"Reduced range (less km per charge than expected)",
+"Scooter not starting or sudden power loss",
+"Warning lights / error codes on display",
+"Strange noises from motor, controller or brakes",
+"Brake problems (soft brakes or not working properly)",
+"Throttle / accelerator not responding smoothly",
+"Controller faults or overheating",
+"Headlight, indicators or display not working",
+"Tyre issues or general maintenance needed",
+"Other issue (please describe below)",
 ];
 
 const PilotServicePage = () => {
     const { toast } = useToast();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [formStartTime, setFormStartTime] = useState(0);
 
     const [brand, setBrand] = useState("");
     const [model, setModel] = useState("");
@@ -57,20 +64,29 @@ const PilotServicePage = () => {
         otherIssue: "",
         brandOther: "",
         modelOther: "",
+        website: "", // Honeypot
         consent: false,
     });
 
+    useEffect(() => {
+        setFormStartTime(Date.now());
+    }, []);
+
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type } = e.target;
+        if (type === "checkbox") {
+            const checked = (e.target as HTMLInputElement).checked;
+            setFormData((prev) => ({ ...prev, [name]: checked }));
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }));
+        }
     };
 
     const handleBrandChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value;
-        setBrand(value);
-        setModel(""); // Reset model when brand changes
+        setBrand(e.target.value);
+        setModel("");
     };
 
     const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -79,51 +95,153 @@ const PilotServicePage = () => {
 
     const handleIssueToggle = (issue: string) => {
         setSelectedIssues((prev) =>
-        prev.includes(issue)
-        ? prev.filter((i) => i !== issue)
-        : [...prev, issue]
+        prev.includes(issue) ? prev.filter((i) => i !== issue) : [...prev, issue]
         );
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validation
+        // 1. Time delay (anti-bot)
+        if (Date.now() - formStartTime < 5000) {
+            toast({
+                title: "Please wait",
+                description: "Fill the form completely before submitting.",
+                variant: "destructive",
+            });
+            return;
+        }
+
+        // 2. Honeypot
+        if (formData.website.trim()) {
+            // bot: silently exit
+            return;
+        }
+
+        // 3. Validation
         const phoneRegex = /^\d{10}$/;
-        if (!formData.name.trim()) return toast({ title: "Name is required", variant: "destructive" });
-        if (!phoneRegex.test(formData.phone)) return toast({ title: "Invalid phone number", description: "Enter a 10-digit mobile/WhatsApp number.", variant: "destructive" });
-        if (!brand) return toast({ title: "Please select your EV brand", variant: "destructive" });
-        if (!model) return toast({ title: "Please select your EV model", variant: "destructive" });
-        if (selectedIssues.length === 0 && !formData.otherIssue.trim()) return toast({ title: "Please describe the issue", variant: "destructive" });
-        if (!formData.location) return toast({ title: "Please select your location", variant: "destructive" });
-        if (!formData.consent) return toast({ title: "Please agree to be contacted", variant: "destructive" });
+
+        if (!formData.name.trim()) {
+            toast({ title: "Name is required", variant: "destructive" });
+            return;
+        }
+        if (!phoneRegex.test(formData.phone)) {
+            toast({
+                title: "Invalid phone / WhatsApp number",
+                description: "Enter a 10‑digit mobile number.",
+                variant: "destructive",
+            });
+            return;
+        }
+        if (!brand) {
+            toast({ title: "Select an EV brand", variant: "destructive" });
+            return;
+        }
+        if (!model) {
+            toast({ title: "Select an EV model", variant: "destructive" });
+            return;
+        }
+        if (selectedIssues.length === 0) {
+            toast({
+                title: "Select at least one issue",
+                variant: "destructive",
+            });
+            return;
+        }
+        if (
+            selectedIssues.includes("Other issue (please describe below)") &&
+            !formData.otherIssue.trim()
+        ) {
+            toast({
+                title: "Describe the other issue",
+                variant: "destructive",
+            });
+            return;
+        }
+        if (!formData.location) {
+            toast({
+                title: "Select your location",
+                variant: "destructive",
+            });
+            return;
+        }
+        if (!formData.consent) {
+            toast({
+                title: "Consent required",
+                description: "Please agree to be contacted for the pilot.",
+                variant: "destructive",
+            });
+            return;
+        }
 
         setIsSubmitting(true);
 
-        // TODO: Connect to backend / GAS here (same as contact form)
+        const formDataToSend = new FormData();
+        formDataToSend.append("name", formData.name.trim());
+        formDataToSend.append("phone", formData.phone.trim());
+        formDataToSend.append("email", formData.email.trim() || "N/A");
+        formDataToSend.append(
+            "brand",
+            brand === "Other" ? formData.brandOther.trim() || "Other" : brand
+        );
+        formDataToSend.append(
+            "model",
+            model === "Other" ? formData.modelOther.trim() || "Other" : model
+        );
+        formDataToSend.append("issues", selectedIssues.join(" | "));
+        formDataToSend.append(
+            "otherIssue",
+            formData.otherIssue.trim() || "N/A"
+        );
+        formDataToSend.append("location", formData.location);
+        formDataToSend.append("website", formData.website); // Honeypot
+
         try {
+            const isLocalhost =
+            window.location.hostname.includes("localhost") ||
+            window.location.hostname === "127.0.0.1";
+
+            await fetch(
+                "https://script.google.com/macros/s/AKfycbxQ_pOo5MrWsSJyxkekDiaJh12CQSTnbH-319W7o_534PLFY1pxDsT9KzSgIC078SSV/exec",
+                {
+                    method: "POST",
+                    body: formDataToSend,
+                    mode: isLocalhost ? "cors" : "no-cors",
+                    redirect: "follow",
+                }
+            );
+
             toast({
                 title: "Request Submitted Successfully!",
-                description: "We'll call you soon to confirm pilot service availability in your area.",
+                description: "Thank you! We'll contact you soon via call/WhatsApp.",
             });
 
             // Reset form
-            setFormData({ name: "", phone: "", email: "", location: "", otherIssue: "", brandOther: "", modelOther: "", consent: false });
+            setFormData({
+                name: "",
+                phone: "",
+                email: "",
+                location: "",
+                otherIssue: "",
+                brandOther: "",
+                modelOther: "",
+                website: "",
+                consent: false,
+            });
             setBrand("");
             setModel("");
             setSelectedIssues([]);
+            setFormStartTime(Date.now());
         } catch (err) {
-            toast({ title: "Submission failed", description: "Try again or WhatsApp us directly.", variant: "destructive" });
+            toast({
+                title: "Submission failed",
+                description: "Try again or contact via WhatsApp.",
+                variant: "destructive",
+            });
         } finally {
             setIsSubmitting(false);
         }
     };
-
-    const effectiveBrand = brand === "Other" && formData.brandOther ? formData.brandOther : brand;
-    const effectiveModel = model === "Other" && formData.modelOther ? formData.modelOther : model;
-    const effectiveIssues = selectedIssues.includes("Other issue") && formData.otherIssue
-    ? [...selectedIssues.filter(i => i !== "Other issue"), formData.otherIssue]
-    : selectedIssues;
 
     return (
         <>
@@ -132,12 +250,15 @@ const PilotServicePage = () => {
         <section className="section-padding border-b border-foreground">
         <div className="container-narrow text-center">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-        Request Pilot Service for Your Chinese EV Scooter
+        Pilot Service Request for Your Electric Scooter
         </h1>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-        We're starting limited pilot services in <strong>Avadi, Ambattur, Thirumullaivoyal</strong> and nearby areas for Chinese-origin electric scooters (Okinawa, Ampere, Benling, Komaki, Pure EV, etc.).
+        We're offering limited pilot repair & maintenance services in{" "}
+        <strong>Avadi, Ambattur, Thirumullaivoyal</strong> and nearby
+        areas.
         <br />
-        Fill this quick form — we'll call you to check if we can help with your scooter.
+        Specializing in popular brands like Okinawa, Ampere, Pure EV,
+        Komaki, Benling, Okaya, Hero Electric, and more.
         </p>
         </div>
         </section>
@@ -146,6 +267,16 @@ const PilotServicePage = () => {
         <div className="container-narrow max-w-2xl">
         <div className="bg-background border border-foreground p-8 md:p-10 rounded-2xl shadow-lg">
         <form className="space-y-7" onSubmit={handleSubmit}>
+        {/* Honeypot - hidden from users */}
+        <div className="hidden">
+        <Input
+        name="website"
+        value={formData.website}
+        onChange={handleChange}
+        tabIndex={-1}
+        />
+        </div>
+
         {/* Name & Phone */}
         <div className="grid md:grid-cols-2 gap-6">
         <div>
@@ -173,9 +304,9 @@ const PilotServicePage = () => {
         </div>
         </div>
 
-        {/* Email (optional) */}
+        {/* Email */}
         <div>
-        <Label htmlFor="email">Email (optional – for updates)</Label>
+        <Label htmlFor="email">Email (optional)</Label>
         <Input
         id="email"
         name="email"
@@ -188,134 +319,152 @@ const PilotServicePage = () => {
 
         {/* Brand */}
         <div>
-        <Label htmlFor="brand">EV Brand *</Label>
+        <Label>EV Brand *</Label>
         <select
-        id="brand"
+        className="w-full mt-2 bg-background border border-foreground rounded-lg px-4 py-3"
         value={brand}
         onChange={handleBrandChange}
-        className="w-full mt-2 bg-background border border-foreground rounded-lg px-4 py-3 text-foreground"
         required
         >
-        <option value="">Select your brand</option>
+        <option value="">Select brand</option>
         {chineseBrands.map((b) => (
-            <option key={b} value={b}>{b}</option>
+            <option key={b} value={b}>
+            {b}
+            </option>
         ))}
         </select>
         {brand === "Other" && (
             <Input
             className="mt-4"
             name="brandOther"
-            placeholder="Enter your brand name"
+            placeholder="Enter brand name"
             value={formData.brandOther}
             onChange={handleChange}
+            required
             />
         )}
         </div>
 
         {/* Model */}
         <div>
-        <Label htmlFor="model">EV Model *</Label>
+        <Label>EV Model *</Label>
         <select
-        id="model"
+        className="w-full mt-2 bg-background border border-foreground rounded-lg px-4 py-3"
         value={model}
         onChange={handleModelChange}
-        className="w-full mt-2 bg-background border border-foreground rounded-lg px-4 py-3 text-foreground"
         disabled={!brand}
         required
         >
-        <option value="">Select your model</option>
-        {brand && modelsByBrand[brand]?.map((m) => (
-            <option key={m} value={m}>{m}</option>
-        ))}
-        </select>
-        {model === "Other" && (
-            <Input
-            className="mt-4"
-            name="modelOther"
-            placeholder="Enter your model name"
-            value={formData.modelOther}
-            onChange={handleChange}
-            />
-        )}
-        </div>
-
-        {/* Common Issues – Checkboxes */}
-        <div>
-        <Label>What problem are you facing? * (select all that apply)</Label>
-        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-        {commonIssues.map((issue) => (
-            <div key={issue} className="flex items-center space-x-3">
-            <Checkbox
-            id={issue}
-            checked={selectedIssues.includes(issue)}
-            onCheckedChange={() => handleIssueToggle(issue)}
-            />
-            <label htmlFor={issue} className="text-sm text-foreground cursor-pointer">
-            {issue}
-            </label>
+        <option value="">Select model</option>
+        {brand &&
+            modelsByBrand[brand]?.map((m) => (
+                <option key={m} value={m}>
+                {m}
+                </option>
+            ))}
+            </select>
+            {model === "Other" && (
+                <Input
+                className="mt-4"
+                name="modelOther"
+                placeholder="Enter model name"
+                value={formData.modelOther}
+                onChange={handleChange}
+                required
+                />
+            )}
             </div>
-        ))}
-        </div>
-        {selectedIssues.includes("Other issue") && (
-            <Textarea
-            className="mt-4"
-            name="otherIssue"
-            placeholder="Describe the other issue in detail..."
-            rows={4}
-            value={formData.otherIssue}
+
+            {/* Issues */}
+            <div>
+            <Label>
+            What issues are you facing? * (select all that apply)
+            </Label>
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+            {commonIssues.map((issue) => (
+                <div
+                key={issue}
+                className="flex items-center space-x-3"
+                >
+                <Checkbox
+                checked={selectedIssues.includes(issue)}
+                onCheckedChange={() => handleIssueToggle(issue)}
+                />
+                <label className="text-sm text-foreground cursor-pointer">
+                {issue}
+                </label>
+                </div>
+            ))}
+            </div>
+            {selectedIssues.includes(
+                "Other issue (please describe below)"
+            ) && (
+                <Textarea
+                className="mt-4"
+                name="otherIssue"
+                placeholder="Describe the other issue in detail..."
+                rows={4}
+                value={formData.otherIssue}
+                onChange={handleChange}
+                required
+                />
+            )}
+            </div>
+
+            {/* Location */}
+            <div>
+            <Label>Your Location *</Label>
+            <select
+            name="location"
+            className="w-full mt-2 bg-background border border-foreground rounded-lg px-4 py-3"
+            value={formData.location}
             onChange={handleChange}
+            required
+            >
+            <option value="">Select area</option>
+            <option value="Avadi">Avadi</option>
+            <option value="Ambattur">Ambattur</option>
+            <option value="Thirumullaivoyal">Thirumullaivoyal</option>
+            <option value="Nearby area">Nearby area</option>
+            </select>
+            </div>
+
+            {/* Consent */}
+            <div className="flex items-start gap-4">
+            <Checkbox
+            id="consent"
+            checked={formData.consent}
+            onCheckedChange={(c) =>
+                setFormData((prev) => ({ ...prev, consent: !!c }))
+            }
+            required
             />
-        )}
-        </div>
+            <Label
+            htmlFor="consent"
+            className="text-sm text-muted-foreground leading-relaxed"
+            >
+            I agree to be contacted via call/WhatsApp for pilot service
+            coordination. I understand this is a limited early-stage
+            pilot.
+            </Label>
+            </div>
 
-        {/* Location */}
-        <div>
-        <Label htmlFor="location">Your Location *</Label>
-        <select
-        id="location"
-        name="location"
-        value={formData.location}
-        onChange={handleChange}
-        className="w-full mt-2 bg-background border border-foreground rounded-lg px-4 py-3 text-foreground"
-        required
-        >
-        <option value="">Select area</option>
-        <option value="Avadi">Avadi</option>
-        <option value="Ambattur">Ambattur</option>
-        <option value="Thirumullaivoyal">Thirumullaivoyal</option>
-        <option value="Nearby area">Nearby area (please mention in notes if needed)</option>
-        </select>
-        </div>
-
-        {/* Consent */}
-        <div className="flex items-start gap-4">
-        <Checkbox
-        id="consent"
-        checked={formData.consent}
-        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, consent: !!checked }))}
-        required
-        />
-        <Label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed">
-        I agree to be contacted by 3S Electric via call/WhatsApp for pilot service coordination. I understand this is a limited early-stage pilot.
-        </Label>
-        </div>
-
-        {/* Hidden fields for backend */}
-        <input type="hidden" name="brand" value={effectiveBrand} />
-        <input type="hidden" name="model" value={effectiveModel} />
-        <input type="hidden" name="issues" value={effectiveIssues.join(" | ")} />
-
-        <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Submit Request"}
-        <Send className="ml-2 h-5 w-5" />
-        </Button>
-        </form>
-        </div>
-        </div>
-        </section>
-        </main>
-        <Footer />
-        </>
+            <Button
+            type="submit"
+            size="lg"
+            className="w-full"
+            disabled={isSubmitting}
+            >
+            {isSubmitting ? "Submitting..." : "Submit Request"}
+            <Send className="ml-2 h-5 w-5" />
+            </Button>
+            </form>
+            </div>
+            </div>
+            </section>
+            </main>
+            <Footer />
+            </>
     );
 };
 

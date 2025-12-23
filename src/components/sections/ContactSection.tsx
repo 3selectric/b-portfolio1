@@ -184,7 +184,7 @@ const ContactSection = () => {
 
     <div>
     <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-    Phone (optional)
+    Phone
     </label>
     <Input
     id="phone"
