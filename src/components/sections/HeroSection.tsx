@@ -25,7 +25,7 @@ const HeroSection = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
             <Button variant="hero" size="xl" onClick={scrollToContact}>
-              Contact Founder
+              Contact Team
               <ArrowRight className="ml-1" />
             </Button>
             <Button variant="hero-outline" size="xl" asChild>

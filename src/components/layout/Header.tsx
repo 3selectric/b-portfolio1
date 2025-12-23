@@ -128,7 +128,7 @@ const Header = () => {
     {/* Mobile Menu */}
     {isMobileMenuOpen && (
       <nav className="md:hidden pt-6 pb-4 space-y-4">
-      {[...navLinks, { label: "Founder", href: "#founder" }].map(
+      {[...navLinks, /*{ label: "Founder", href: "#founder" }*/].map(
         (link) => (
           <button
           key={link.href}
