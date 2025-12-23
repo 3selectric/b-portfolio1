@@ -1,32 +1,32 @@
-import { ArrowRight, Calendar, CheckCircle, Zap, Lightbulb } from "lucide-react";
+import { NotebookPen, Sprout, CheckCircle, Zap, Lightbulb, Rocket } from "lucide-react";
 
 const timeline = [
     {
-        date: "2024",
+        date: "Nov - Dec 2024",
         title: "Ideation & Early Validation",
         icon: Lightbulb,
         desc: "Identified critical gaps in India’s EV service and maintenance ecosystem and validated the problem with EV owners, fleet operators, and technicians.",
     },
 {
-    date: "2024",
+    date: "Jan - Apr 2025",
     title: "Program Selections & Validation",
     icon: CheckCircle,
-    desc: "Semi-Finalist at IIT Kharagpur Empresario, Finalist at Anna University Startify 3.0, and selected participant at NITK Surathkal Inno8 2024.",
+    desc: "Semi-Finalist at IIT Kharagpur Empresario, Finalist at Anna University Startify 3.0, and selected participant at NITK Surathkal Inno8 2025.",
 },
 {
-    date: "2024",
+    date: "May - Aug 2025",
     title: "Mentorship & Ecosystem Exposure",
-    icon: Calendar,
-    desc: "Engaged with mentors from IITs, NITK, and the Wadhwani ecosystem to refine problem–solution fit and understand fleet and EV servicing challenges.",
+    icon: Sprout,
+    desc: "Engaged with mentors from IITs, NITK, SSSHIL Sparklab and the Wadhwani ecosystem to refine problem–solution fit and understand fleet and EV servicing challenges.",
 },
 {
-    date: "2024",
+    date: "Sep - Nov 2025",
     title: "Solution Structuring & Planning",
-    icon: ArrowRight,
+    icon: NotebookPen,
     desc: "Designed service workflows for home visits, workshop repairs, and fleet maintenance, and planned a web-based booking and coordination platform.",
 },
 {
-    date: "2025",
+    date: "Dec 2025",
     title: "Current Focus",
     icon: Zap,
     desc: "Building the official business portfolio and outreach website and developing the initial service request and booking system.",
@@ -34,7 +34,7 @@ const timeline = [
 {
     date: "Next 3–6 Months",
     title: "Upcoming Milestones",
-    icon: Zap,
+    icon: Rocket,
     desc: "Launch pilot EV service operations, formalize technician onboarding and training, and establish early partnerships with fleet operators and EV stakeholders.",
 },
 ];
