@@ -55,7 +55,7 @@ const Header = () => {
 
   const goToPilotService = () => {
     setIsMobileMenuOpen(false);
-    navigate("/pilot-service"); //add link da!!
+    navigate("/pilot-service");
   };
 
   return (
