@@ -150,13 +150,6 @@ const Header = () => {
       >
       Talk to Us
       </Button>
-      <Button
-      variant="outline"
-      className="w-full mt-3"
-      onClick={goToPilotService}
-      >
-      Pilot
-      </Button>
       </nav>
     )}
     </div>
